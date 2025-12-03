@@ -22,16 +22,12 @@ A compact, Woki-branded booking engine for restaurants that discovers when and h
     npm run start
     # or for development with hot reload
     npm run dev
-    # or directly
-    npx tsx src/index.ts
     ```
     Server runs on `http://localhost:3000`.
 
 3.  **Run Tests**:
     ```bash
     npm run test
-    # or
-    npx vitest
     ```
 
 ## Architecture

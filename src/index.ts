@@ -3,12 +3,6 @@
  * 
  * Main entry point for the Fastify-based REST API server.
  * Configures rate limiting, logging, and route registration for the WokiBrain booking system.
- * 
- * Features:
- * - Fastify web server with pretty logging
- * - Rate limiting (100 requests per minute)
- * - RESTful API endpoints under /woki prefix
- * - In-memory data store with seed data
  */
 
 import fastify from "fastify";
@@ -49,8 +43,6 @@ app.register(function (app, _, done) {
     done();
 }, { prefix: "/woki" });
 
-// Load seed data for dev/test
-// In a real app, this might be conditional or handled differently
 store.loadSeed(seedData);
 
 app.listen({ port: 3000 });

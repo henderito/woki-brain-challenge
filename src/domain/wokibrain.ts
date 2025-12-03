@@ -2,9 +2,7 @@ import type * as types from "../types";
 import { findGaps, discretizeGaps, intersectGaps } from './gaps';
 
 /**
- * Calculate booking duration based on party size
- * 
- * Applies business rule B1: larger parties get longer booking durations.
+ * Calculate booking duration based on party size: larger parties get longer booking durations.
  * 
  * @param partySize - Number of people in the party
  * @returns Duration in minutes:
@@ -23,7 +21,7 @@ export const getDurationForPartySize = (partySize: number): number => {
 /**
  * Calculate combined capacity for a table combination
  * 
- * Uses the Sum of Capacities heuristic:
+ * Uses the Sum of Capacities:
  * - Combo MinSize = Sum of all table MinSize values
  * - Combo MaxSize = Sum of all table MaxSize values
  * 
@@ -39,12 +37,7 @@ export const getComboCapacity = (tables: types.Table[]): { min: number; max: num
 }
 
 /**
- * Generate all possible combinations (powerset) of an array
- * 
- * Uses functional reduce approach to build powerset iteratively.
- * For n items, generates 2^n combinations including empty set.
- * 
- * Example: [A, B] => [[], [A], [B], [A,B]]
+ * Generate all possible combinations of tables
  * 
  * @param arr - Input array of items
  * @returns All possible combinations including empty set

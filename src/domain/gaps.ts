@@ -1,13 +1,6 @@
 import { Booking, Candidate, TimeSlot } from "../types";
 import { parseISO, addMinutes, isBefore, isAfter, set } from "date-fns";
 
-/**
- * Parse date and time strings into a Date object
- * 
- * @param date - ISO date string (YYYY-MM-DD)
- * @param time - Time string in HH:mm format
- * @returns Date object with specified date and time, seconds/milliseconds zeroed
- */
 export const parseTime = (date: string, time: string): Date => {
     const [hours, minutes] = time.split(':').map(Number);
     return set(parseISO(date), { hours: hours!, minutes: minutes!, seconds: 0, milliseconds: 0 });

@@ -37,7 +37,6 @@ export const discover = async (request, reply) => {
     }
     const { restaurantId, sectorId, date, partySize, windowStart, windowEnd } = query.data;
 
-    // B1: Calculate duration based on party size
     const duration = getDurationForPartySize(partySize);
 
     const restaurant = store.getRestaurant(restaurantId);
@@ -104,7 +103,6 @@ export const bookings = async (request, reply) => {
     }
     const { restaurantId, sectorId, date, partySize, windowStart, windowEnd } = body.data;
 
-    // B1: Calculate duration based on party size
     const durationMinutes = getDurationForPartySize(partySize);
 
     const lockKey = `${restaurantId}:${sectorId}:${date}`;

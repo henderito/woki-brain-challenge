@@ -6,15 +6,11 @@ import { parseISO } from 'date-fns';
 import { getDurationForPartySize } from '../domain/wokibrain';
 
 describe('WokiBrain Logic', () => {
-
     const dateStr = '2025-10-22';
-    const windows = [{ start: '12:00', end: '16:00' }, { start: '20:00', end: '23:45' }];
 
     it('should find gaps for a single table', () => {
-        // Use only the evening window for this test to avoid finding gaps in the afternoon window
         const eveningWindow = [{ start: '20:00', end: '23:45' }];
 
-        // Use local time (no Z) to match parseTime behavior which uses local time
         const bookings: Booking[] = [
             {
                 id: 'b1', restaurantId: 'r1', sectorId: 's1', tableIds: ['t1'], partySize: 2,
@@ -22,27 +18,15 @@ describe('WokiBrain Logic', () => {
             }
         ];
 
-        // Request 90m
         const gaps = findGaps('t1', bookings, dateStr, 90, eveningWindow);
 
-        // Window 20:00-23:45. Booking 20:30-21:15.
-        // Gap 1: 20:00-20:30 (30m) -> Too small
-        // Gap 2: 21:15-23:45 (2h30m) -> Valid
-
         expect(gaps.length).toBe(1);
-        // 21:15 to 23:45
-        // Use format to check local time (which should match the input time strings)
         const { format } = require('date-fns');
         expect(format(gaps[0]!.start, 'HH:mm')).toBe('21:15');
         expect(format(gaps[0]!.end, 'HH:mm')).toBe('23:45');
     });
 
     it('should intersect gaps for combos', () => {
-        // T1 free 20:00-22:00
-        // T2 free 21:00-23:00
-        // Intersection: 21:00-22:00 (60m)
-
-        // Using UTC (Z) to be safe and deterministic in tests
         const gaps1 = [{ start: parseISO('2025-10-22T20:00:00Z'), end: parseISO('2025-10-22T22:00:00Z') }];
         const gaps2 = [{ start: parseISO('2025-10-22T21:00:00Z'), end: parseISO('2025-10-22T23:00:00Z') }];
 
